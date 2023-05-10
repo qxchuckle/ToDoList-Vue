@@ -1,28 +1,61 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="todo-container">
+      <div id="todo-wrap">
+        <ToDoHeader></ToDoHeader>
+        <ToDoList></ToDoList>
+        <ToDoFooter></ToDoFooter>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ToDoHeader from "./components/ToDoHeader.vue";
+import ToDoList from "./components/ToDoList.vue";
+import ToDoFooter from "./components/ToDoFooter.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    ToDoHeader,
+    ToDoList,
+    ToDoFooter,
+  },
+};
 </script>
 
-<style>
+<style lang="less">
+@todo-border: 1px solid #ccc;
+@todo-border-radius: 6px;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin: 20px 10px;
+  font-size: 16px;
+}
+
+#todo-container {
+  max-width: 600px;
+  min-width: 300px;
+  height: auto;
+  margin: 0 auto;
+  padding: 10px;
+  border: @todo-border;
+  border-radius: @todo-border-radius;
+
+  #todo-wrap {
+    width: 100%;
+  }
+
 }
 </style>

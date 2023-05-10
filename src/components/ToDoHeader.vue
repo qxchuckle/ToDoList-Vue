@@ -1,13 +1,39 @@
 <template>
     <div class="todo-header">
-        <input type="text" placeholder="回车新增ToDo" />
-        <button>新增</button>
+        <input type="text" placeholder="回车新增ToDo" @keyup.enter="addToDo"/>
+        <button @click="addToDo">新增</button>
     </div>
 </template>
 
 <script>
+import {nanoid} from "nanoid";
 export default {
     name: "ToDoHeader",
+    props: ['receive'],
+    methods: {
+        addToDo(e){
+            // 获取input框元素
+            let input = e.target.tagName === "INPUT" ? e.target : e.target.parentNode.firstElementChild
+            // 输入框为空或只有空格就返回
+            if(input.value.trim() === ""){
+                input.value = "";
+                return
+            }
+            // 生成数据对象
+            let todo = {
+                // 正常来说数据由后端返回，id由数据库维护，这里使用nanoid生成唯一id
+                id: nanoid(),
+                title: input.value,
+                complete: false
+            }
+            // 清空input
+            input.value = "";
+            console.log(todo);
+            // 将用户输入通过接收到函数传给父组件
+            // this.receive(todo);
+            this.$emit('receive',todo)
+        }
+    }
 };
 </script>
 

@@ -1,16 +1,29 @@
 <template>
     <li>
         <label>
-            <input type="checkbox">
-            <span>这是一个ToDo</span>
+            <input type="checkbox" :checked="todo.complete" @change="changeComplete(todo.id)">
+            <span>{{ todo.title }}</span>
         </label>
-        <button class="list-item-btn">删除</button>
+        <button class="list-item-btn" @click="deleteToDo(todo.id)">删除</button>
     </li>
 </template>
 
 <script>
 export default {
     name: 'ListItem',
+    props: ['todo'],
+    methods: {
+        changeComplete(id) {
+            // 由于ListItem是App的孙子，所以要先通过$emit()将数据传给父组件，再由父组件传给爷爷组件
+            this.$emit('receiveId', id)
+        },
+        deleteToDo(id) {
+            if (!confirm('确认删除吗?')) {
+                return
+            }
+            this.$emit('deleteToDo', id)
+        }
+    }
 }
 </script>
 
@@ -25,8 +38,16 @@ li {
     line-height: 37px;
     justify-content: space-between;
 
-    &:last-child{
+    &:last-child {
         border-bottom: none;
+    }
+
+    &:hover {
+        background: rgb(240, 240, 240);
+
+        button {
+            display: block;
+        }
     }
 
     label {
@@ -48,6 +69,7 @@ li {
         padding: 0 5px;
         background: #dc7878;
         color: #fff;
+        display: none;
     }
 }
 </style>

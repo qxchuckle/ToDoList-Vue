@@ -3,7 +3,7 @@
     <div id="todo-container">
       <div id="todo-wrap">
         <ToDoHeader @receive="receive"></ToDoHeader>
-        <ToDoList :todos="todos" @updateComplete="updateComplete" @deleteToDo="deleteToDo"></ToDoList>
+        <ToDoList :todos="todos"></ToDoList>
         <ToDoFooter :todos="todos" @changeAll="changeAll" @deleteComplete="deleteComplete"></ToDoFooter>
       </div>
     </div>
@@ -73,6 +73,10 @@ export default {
         localStorage.setItem("todos", JSON.stringify(value));
       }
     }
+  },
+  mounted(){
+    this.$bus.$on('updateComplete', this.updateComplete)
+    this.$bus.$on('deleteToDo', this.deleteToDo)
   }
 };
 </script>

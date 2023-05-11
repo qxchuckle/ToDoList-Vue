@@ -14,14 +14,15 @@ export default {
     props: ['todo'],
     methods: {
         changeComplete(id) {
-            // 由于ListItem是App的孙子，所以要先通过$emit()将数据传给父组件，再由父组件传给爷爷组件
-            this.$emit('receiveId', id)
+            // 触发事件传入id
+            this.$bus.$emit('updateComplete', id)
         },
         deleteToDo(id) {
             if (!confirm('确认删除吗?')) {
                 return
             }
-            this.$emit('deleteToDo', id)
+            // 触发事件传入id
+            this.$bus.$emit('deleteToDo', id)
         }
     }
 }

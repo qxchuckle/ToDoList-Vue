@@ -4,10 +4,10 @@
             <input v-show="!isEdit" type="checkbox" :checked="todo.complete" @change="changeComplete(todo.id)">
             <span v-show="!isEdit" ref="titleToDo">{{ todo.title }}</span>
             <input v-show="isEdit" class="todo-title-input" type="text" :value="todo.title" ref="titleInput"
-                @input="showSaveButton()" @blur="editToDo(todo.id)" contenteditable="true">
+                @blur="editToDo(todo.id)" contenteditable="true">
         </label>
         <div class="btn-box">
-            <button v-show="isEdit && ifEdit" class="list-item-btn" @click="editToDo(todo.id)">保存</button>
+            <button v-show="isEdit" class="list-item-btn" @click="editToDo(todo.id)">保存</button>
             <button v-show="isEdit" class="list-item-btn" @click="completeEdit()">取消</button>
             <button v-show="!isEdit" class="list-item-btn" @click="edit()">编辑</button>
             <button class="btn-delete" @click="deleteToDo(todo.id)">删除</button>
@@ -24,8 +24,6 @@ export default {
         return {
             // 是否在修改，控制输入框显隐
             isEdit: false,
-            // 是否以及修改，控制保存按钮的显隐
-            ifEdit: false,
         }
     },
     methods: {
@@ -69,11 +67,6 @@ export default {
                 return;
             }
             pubsub.publish('editToDo', [id, input.value]);
-        },
-        // 当input内容发生改变才显示保存按钮
-        showSaveButton() {
-            if (this.ifEdit) return;
-            this.ifEdit = true;
         }
     }
 }

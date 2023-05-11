@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import pubsub from "pubsub-js";
+
 import ToDoHeader from "./components/ToDoHeader.vue";
 import ToDoList from "./components/ToDoList.vue";
 import ToDoFooter from "./components/ToDoFooter.vue";
@@ -61,6 +63,14 @@ export default {
       this.todos = this.todos.filter((item) => {
         return !item.complete;
       });
+    },
+    // 修改todo的title
+    editToDo(id,value){
+      this.todos.forEach((item, index, arr) => {
+        if (item.id === id) {
+          arr[index].title = value;
+        }
+      });
     }
   },
   watch: {
@@ -76,7 +86,19 @@ export default {
   },
   mounted(){
     this.$bus.$on('updateComplete', this.updateComplete)
-    this.$bus.$on('deleteToDo', this.deleteToDo)
+    // this.$bus.$on('deleteToDo', this.deleteToDo)
+
+    // 订阅消息
+    pubsub.subscribe('deleteToDo', (magName, data)=>{
+      magName; // eslint不允许不使用参数，这里使用一下
+      // 将接收到的数据（要删除的id）传给删除函数
+      this.deleteToDo(data)
+    })
+    // 订阅修改todo的消息
+    pubsub.subscribe('editToDo', (magName,arr)=>{
+      magName;
+      this.editToDo(arr[0],arr[1])
+    })
   }
 };
 </script>

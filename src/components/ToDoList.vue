@@ -1,8 +1,7 @@
 <template>
   <div class="todo-list">
     <ul>
-      <ListItem v-for="item in todos" :key="item.id" :todo="item">
-      </ListItem>
+      <ListItem v-for="item in todos" :key="item.id" :todo="item"></ListItem>
     </ul>
   </div>
 </template>
@@ -14,8 +13,8 @@ export default {
   components: {
     ListItem,
   },
-  props: ['todos'],
-  methods: {}
+  props: ["todos"],
+  methods: {},
 };
 </script>
 
@@ -27,5 +26,6 @@ export default {
   margin-bottom: 15px;
   border-radius: @todo-border-radius;
   border: @todo-border;
+  overflow: hidden;
 }
 </style>

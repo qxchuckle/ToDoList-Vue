@@ -28,7 +28,6 @@ export default {
             }
             // 清空input
             input.value = "";
-            console.log(todo);
             // 将用户输入通过接收到函数传给父组件
             // this.receive(todo);
             this.$emit('receive', todo)

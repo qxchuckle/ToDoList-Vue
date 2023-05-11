@@ -1,21 +1,21 @@
 <template>
     <div class="todo-header">
-        <input type="text" placeholder="回车新增ToDo" @keyup.enter="addToDo"/>
+        <input type="text" placeholder="回车新增ToDo" @keyup.enter="addToDo" />
         <button @click="addToDo">新增</button>
     </div>
 </template>
 
 <script>
-import {nanoid} from "nanoid";
+import { nanoid } from "nanoid";
 export default {
     name: "ToDoHeader",
     props: ['receive'],
     methods: {
-        addToDo(e){
+        addToDo(e) {
             // 获取input框元素
             let input = e.target.tagName === "INPUT" ? e.target : e.target.parentNode.firstElementChild
             // 输入框为空或只有空格就返回
-            if(input.value.trim() === ""){
+            if (input.value.trim() === "") {
                 input.value = "";
                 return
             }
@@ -31,7 +31,7 @@ export default {
             console.log(todo);
             // 将用户输入通过接收到函数传给父组件
             // this.receive(todo);
-            this.$emit('receive',todo)
+            this.$emit('receive', todo)
         }
     }
 };

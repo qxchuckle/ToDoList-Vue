@@ -24,23 +24,8 @@ export default {
   },
   data() {
     return {
-      todos: [
-        {
-          id: "001",
-          title: "第一件事",
-          complete: false
-        },
-        {
-          id: "002",
-          title: "第二件事",
-          complete: true
-        },
-        {
-          id: "003",
-          title: "第三件事",
-          complete: false
-        }
-      ],
+      // 初始化todos，本地存储有则拿，没有则赋值空数组
+      todos: JSON.parse(localStorage.getItem("todos")) || [],
     }
   },
   methods: {
@@ -64,18 +49,29 @@ export default {
       });
     },
     // 全选或全不选，即全都变为目前全选按钮状态的反状态
-    changeAll(checkValue){
+    changeAll(checkValue) {
       this.todos.forEach((item) => {
-        if(item.complete !== checkValue) {
+        if (item.complete !== checkValue) {
           item.complete = checkValue;
         }
       });
     },
     // 删除所有已完成项
-    deleteComplete(){
+    deleteComplete() {
       this.todos = this.todos.filter((item) => {
         return !item.complete;
       });
+    }
+  },
+  watch: {
+    // 监视todos发生的变化
+    todos: {
+      // 数据多层开启深度监视
+      deep: true,
+      handler(value) {
+        // 只要数据发生改变就更新本地存储的数据
+        localStorage.setItem("todos", JSON.stringify(value));
+      }
     }
   }
 };

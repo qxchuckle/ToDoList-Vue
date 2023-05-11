@@ -1,7 +1,8 @@
 <template>
   <div class="todo-list">
     <ul>
-      <ListItem v-for="item in todos" :key="item.id" :todo="item" @receiveId="receiveId" @deleteToDo="deleteToDo"></ListItem>
+      <ListItem v-for="item in todos" :key="item.id" :todo="item" @receiveId="receiveId" @deleteToDo="deleteToDo">
+      </ListItem>
     </ul>
   </div>
 </template>
@@ -15,10 +16,10 @@ export default {
   },
   props: ['todos'],
   methods: {
-    receiveId(id){
+    receiveId(id) {
       this.$emit('updateComplete', id)
     },
-    deleteToDo(id){
+    deleteToDo(id) {
       this.$emit('deleteToDo', id)
     }
   }

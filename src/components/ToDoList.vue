@@ -1,7 +1,9 @@
 <template>
   <div class="todo-list">
     <ul>
-      <ListItem v-for="item in todos" :key="item.id" :todo="item"></ListItem>
+      <transition-group name="todo">
+        <ListItem v-for="item in todos" :key="item.id" :todo="item"></ListItem>
+      </transition-group>
     </ul>
   </div>
 </template>
@@ -27,5 +29,21 @@ export default {
   border-radius: @todo-border-radius;
   border: @todo-border;
   overflow: hidden;
+}
+
+/* 动画 */
+.todo-enter,
+.todo-leave-to {
+  opacity: 0;
+  transform: translateX(-50%);
+}
+
+.todo-enter-to,
+.todo-leave {
+  opacity: 1;
+  transform: translateX(0);
+}
+.todo-enter-active, .todo-leave-active {
+    transition: all 0.3s;
 }
 </style>
